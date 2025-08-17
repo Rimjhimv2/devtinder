@@ -1,0 +1,143 @@
+- node_modules, package.json, package-lock.json
+- Install express
+- Create a server
+- Listen to port 7777
+- Write request handlers for /test , /hello
+- Install nodemon and update scripts inside package.json
+- What are dependencies
+- What is the use of "-g" while npm install
+- Difference between caret and tilde ( ^ vs ~ )
+
+- initialize git
+- .gitignore
+- Create a remote repo on github
+- Push all code to remote origin
+- Play with routes and route extensions ex. /hello, / , hello/2, /xyz
+- Order of the routes matter a lot
+- Install Postman app and make a workspace/collectio > test API call
+- Write logic to handle GET, POST, PATCH, DELETE API Calls and test them on Postman
+- Explore routing and use of ?, +, (), * in the routes
+- Use of regex in routes /a/ , /.*fly$/
+- Reading the query params in the routes
+- Reading the dynamic routes
+
+- Multiple Route Handlers - Play with the code
+- next()
+- next function and errors along with res.send()
+-app.use("/route',rH,[rH2,rH3],rH4,rH5)
+
+
+
+
+
+//this will only handle get call to /user
+//app.get("/user/:userId",(req,res)=>{
+  //  console.log(req.params);
+   // res.send({firstname:"rimjhim",lastname:"verma"})
+//})
+
+/*app.use(
+    "/users",
+    [(req,res)=>{
+    console.log("save data to the database");
+    res.send("1st response");
+},
+(req,res)=>{
+    console.log("save data to the database");
+    res.send("2nd response");
+}],
+(req,res)=>{
+    console.log("save data to the database");
+    res.send("3nd response");
+},
+(req,res)=>{
+    console.log("save data to the database");
+    res.send("4nd response");
+},
+(req,res)=>{
+    console.log("save data to the database");
+    res.send("5nd response");
+}
+)*/
+
+
+
+
+
+//Problem — No more matching route handlers exist after the second one, so Express tries to move on, but since you never sent a response (res.send(), res.end(), or res.json()), the request remains open.
+
+//Result in browser/Postman:
+
+//The request keeps loading forever (hanging request) until it times out.
+/*app.get("/isha",(req,res,next)=>{
+    console.log("save data to the database");
+    
+    res.send("data is sucessfully saved to the database");
+next();
+});
+app.get("/isha",(req,res)=>{
+    console.log("save data to the database");
+    res.send("data is sucessfully saved to the 45 database");
+next();
+})*/
+
+
+
+// Middleware for any path starting with "/"
+
+/*
+
+app.use("/", (req, res,next) => {
+    //res.send("Handling / route");
+next();
+});
+//app.use("/", ...) without next() will stop all further route processing if it matches first.
+app.get(
+    "/user",
+    (req, res, next) => { next(); },
+    (req, res, next) => { next(); },
+    (req, res) => {
+        res.send("2nd Route Handler");
+    }
+);*/
+
+
+
+
+//Why “middle”?The client starts the request.The server eventually sends a response.In between, you can have multiple functions (middlewares) that:
+//Look at the request (req) Change the request or response Decide whether to continue to the next middleware (next())Or stop and send a response immediately.
+
+//They are “in the middle” of that flow.
+
+
+//app.post("/users",(req,res)=>{
+   // console.log("save data to the database");
+   // res.send("data is sucessfully saved to the database");
+//})
+///app.delete("/users",(req,res)=>{
+
+   // res.send("data is deleted succesfully");
+//})
+ 
+
+//this will match all the http method api call to /test
+
+app.use("/isha",(req,res,next)=>{
+    res.send("hello from  the server");//send a text back to the client
+    next();
+}, 
+    (req,res)=>{
+    res.send("hello from  the server second ");//send a text back to the client
+})
+
+app.use("/test",(req,res)=>{
+    res.send("hello from  the server");//send a text back to the client
+})
+app.use("/hello",(req,res)=>{
+    res.send("hello hello hello hello");//send a text back to the client
+})
+
+
+app.use("/app",(req,res)=>{
+    res.send("app is starting");//send a text back to the client
+})
