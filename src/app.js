@@ -1,65 +1,47 @@
 const express=require("express");//import express into your project
+ const connectDB=require("./config/database")
 const app=express();//crete an expresss app
-//const {adminAuth,userAuth}=require("./middleware/auth")
+const User=require("./models/user");
+app.use(express.json());
+app.post("/signup",async(req,res)=>{
+  //console.log(req.body);
+  const user=new User(req.body);
+  try{
+    await user.save();
+    res.send("User added successfully");
+  }catch(err){
+    res.status(400).send("error saving the user"+err.message);
+  }
+//creating a new instance of a model
+//const user=new User({
+  //firstName:"sachin",
+  l//astName:"Verma",
+  //emailId:"ih@gmail.com",
+  //password:"sac34",
+  
+//});
+//await user.save();
+//res.send("user sent data succesfully")
 
-
-
-//app.use("/admin", adminAuth );
-
-//app.use("/user", userAuth );
-app.use("/",(err,req,res,next)=>{
-    if(err){
-        res.status(500).send("something went wrong")
-    }
-})
-app.get("/getuserData",(req,res)=>{
-    //try{
-    throw new Error("dvbzhjf");
-    res.send("user data sent ");
-//}
-//catch(err){
-    //res.status(500).send("some error occur contact support team")
-//}
 
 
 });
-
-app.use("/",(err,req,res,next)=>{
-    if(err){
-        res.status(500).send("something went wrong");
-    }
-console.log("server is sucessfully listening on port 7777")
-})
-
-//app.get("/admin/getAllData", (req, res) => {
-   // res.send("All Data Sent");
-//});
-//app.get("/admin/deleteUser",(req,res)=>{
-   // res.send("deleted a user");
-//})
-
-
-//app.use("/admin", ...)This tells Express:“For any route starting with /admin (GET, POST, etc.), run this middleware first.”
-
-//console.log("Admin auth is getting checked!!") Just logs to the server console that the middleware is runn.Token checkmtoken is hardcoded to "xyz".
-
-//isAdminAuthorized checks if token is "xyz".In real apps, you’d get token from request headers and validate it.If unauthorized → send HTTP 401 Unauthorized response.
-
-//If authorized → call next() to move to the actual route handler.
-
-
-
-
-
-
 
 
 
 
 //request handler for all incoming http request
-app.listen(3000,()=>{
-    console.log("server is succesfully listening our request")
+connectDB()
+  .then(() => {
+    console.log("Database connection established...");
+    app.listen(7777,()=>{
+        console.log("server is succesfully listening our request")
+    
+    });
+})
+  .catch(err => {
+    console.error("Database connection failed:", err);
+  });
 
-});
 //this tell ur project to start listening for req on this port
 //these 3 line create our web server
