@@ -3,7 +3,8 @@ const mongoose= require("mongoose");
 //good way to connect to wrap it inside async and call await 
 const connectDB=async()=>{
     await mongoose.connect(
-        "mongodb+srv://rimjhimv543:2a3Pbu2VskxyCEJw@namestenode.xeiymrv.mongodb.net/devTinder"
+       // "mongodb+srv://rimjhimv543:2a3Pbu2VskxyCEJw@namestenode.xeiymrv.mongodb.net/devTinder"
+       process.env.MONGO_URI
       );
       
 }
@@ -20,4 +21,4 @@ module.exports=connectDB
 
 //Agar MongoDB se connection ban gaya → .then() chalega aur "Database connection established..." print karega.
 
-//Agar connection me problem aayi (IP whitelist, wrong password, internet issue) → .catch() chalega aur error print karega.
+//Agar connection me problem aayi (IP whitelist, wrong password, internet issue) → .catch() chalega aur error print karega.np

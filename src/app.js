@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express=require("express");//import express into your project
  const connectDB=require("./config/database")
 const app=express();//crete an expresss app
