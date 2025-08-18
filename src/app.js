@@ -3,6 +3,7 @@ const express=require("express");//import express into your project
 const app=express();//crete an expresss app
 const User=require("./models/user");
 app.use(express.json());
+
 app.post("/signup",async(req,res)=>{
   //console.log(req.body);
   const user=new User(req.body);
@@ -25,6 +26,26 @@ app.post("/signup",async(req,res)=>{
 
 
 
+});
+
+
+
+
+app.get("/User", async (req, res) => {
+  try {
+      const userEmail = req.body.email;  // match schema field
+
+      const users = await User.find({ email: userEmail }); // match schema field
+
+      if (users.length === 0) {
+          return res.status(404).send("user not found");
+      }
+
+      res.send(users);
+
+  } catch (err) {
+      res.status(400).send("something went wrong: " + err.message);
+  }
 });
 
 
