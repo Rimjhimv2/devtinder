@@ -74,7 +74,7 @@ app.delete("/user", async (req, res) => {
     try {
     
     // allowed fields list
-    const ALLOWED_UPDATES = ["photourl","gender", "age", "about", "skills"];
+    const ALLOWED_UPDATES = ["photoUrl","gender", "age", "about", "skills"];
     const isUpdateAllowed = Object.keys(data).every((k) =>
       ALLOWED_UPDATES.includes(k)
     );

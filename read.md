@@ -66,6 +66,11 @@ The text from the image is as follows:
 - Create a custom validate function for gender
 -improve the DB schema put all appropriate validation on each  field in schema
 -add timestamp to the userSchema
+-ADD API LEVEL VALIDATION ON PATCH REQUEST AND SIGNUP POST API 
+-data sanitizing add api validation for each field
+-install validator
+-explorer validator library function and use validator func for pass,email                              
+
 
 ```
 //this will only handle get call to /user
