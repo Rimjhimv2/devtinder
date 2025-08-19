@@ -67,11 +67,24 @@ app.delete("/user", async (req, res) => {
   }
 });
 
-  app.patch("/user", async (req, res) => {
-    const userId = req.body.userId; // keep naming consistent
+  app.patch("/user/:userId", async (req, res) => {
+    const userId = req.params?.userId; // id body se le rahe ho
     const data = req.body;
-  
+
     try {
+    
+    // allowed fields list
+    const ALLOWED_UPDATES = ["photourl","gender", "age", "about", "skills"];
+    const isUpdateAllowed = Object.keys(data).every((k) =>
+      ALLOWED_UPDATES.includes(k)
+    );
+
+    if (!isUpdateAllowed) {
+      return res.status(400).send("updates not allowed");
+    }
+    if(data?.skills.length>10){
+      throw new Error("skill cannot be added more than 10 ")
+    }
       const user = await User.findByIdAndUpdate(
         userId,              // pass only the id
         data,                // update data
@@ -80,7 +93,8 @@ app.delete("/user", async (req, res) => {
           runValidators: true,     // validates before updating
         }
       );
-      
+      //i can add a api level validation or db level validation
+      //this is api level valiadation
 
       console.log(user);
       res.send("User updated successfully");
