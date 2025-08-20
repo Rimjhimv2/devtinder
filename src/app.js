@@ -2,20 +2,81 @@ require("dotenv").config();
 const express = require("express"); // import express
 const connectDB = require("./config/database");
 const User = require("./models/user");
-
+const {validateSignUpData}=require("./utils/validation");
+const bcrypt=require("bcrypt");
 const app = express();
+const cookieParser=require("cookie-parser");
+const jwt = require("jsonwebtoken");
 app.use(express.json());
+app.use(cookieParser());
+//app.use(jwt()); jsonwebtoken is not an express middleware it is just a utility library
 
 // Signup Route
 app.post("/signup", async (req, res) => {
-  const user = new User(req.body);
+  //validate the data 
+  
+
+  
   try {
+    validateSignUpData(req);
+    const {firstName,lastName,email,password,age}=req.body;
+    //encrypt the password
+    const passwordHash=await bcrypt.hash(password,10);
+    console.log(passwordHash);
+  const user = new User({
+    firstName,lastName,email,password:passwordHash,age
+  });
     await user.save();
     res.send("User added successfully");
   } catch (err) {
     res.status(400).send("Error saving the user: " + err.message);
   }
 });
+
+app.post("/login",async(req,res)=>{
+  try{
+   const{email,password}=req.body;
+   const user=await User.findOne({email:email});
+   if(!user){
+    throw new Error("emailid is not presesnt in the db")
+   }
+    const ispasswordValid=await bcrypt.compare(password,user.password)
+  if(ispasswordValid){
+    //create a jwt token
+    const token=await jwt.sign({_id:user._id},"DEV@Tinder@#");
+    console.log(token);
+
+
+    //add the token to create cookie
+    res.cookie("token", token, {
+      httpOnly: true, // security best practice
+      secure: false   // true karna prod pe (https ke liye)
+    });
+    res.send("login successful");
+  }
+
+
+  
+  else{
+    throw new Error("password is not correct")
+  }
+  }
+  catch(err){
+    res.status(400).send("ERROR:"+err.message);
+  }
+})
+app.get("/profile",async(req,res)=>{
+  const cookies=req.cookies;
+
+const{token}=cookies;
+//validate my token
+    const decodedMessage=await jwt.verify(token,"DEV@Tinder@#");
+console.log(decodedMessage);
+const{_id}=decodedMessage;
+console.log("Logged in user is:"+_id);
+  //console.log(cookies);
+  res.send("reading cookies")
+})
 
 // Get all users
 app.get("/feed", async (req, res) => {

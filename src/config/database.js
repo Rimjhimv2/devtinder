@@ -11,6 +11,7 @@ const connectDB=async()=>{
 //connectDB return a promise 
 
 module.exports=connectDB
+//each and every data goes into the adtabase have to validates
 
 
 //call this function 
