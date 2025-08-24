@@ -7,8 +7,13 @@ const bcrypt=require("bcrypt");
 const app = express();
 const cookieParser=require("cookie-parser");
 const jwt = require("jsonwebtoken");
+const cors=require("cors")
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({
+  origin:"http://localhost:5173",//when u login u should get in token inside cookies
+  credentials:true,
+}));
 //app.use(jwt()); jsonwebtoken is not an express middleware it is just a utility library
 
 // Signup Route
@@ -52,7 +57,7 @@ app.post("/login",async(req,res)=>{
       httpOnly: true, // security best practice
       secure: false   // true karna prod pe (https ke liye)
     });
-    res.send("login successful");
+    res.send(user);
   }
 
 
@@ -66,17 +71,30 @@ app.post("/login",async(req,res)=>{
   }
 })
 app.get("/profile",async(req,res)=>{
-  const cookies=req.cookies;
+  try{
+     cookies=req.cookies;
 
 const{token}=cookies;
+if(!token){
+  throw new Error("invalid token");
+}
 //validate my token
     const decodedMessage=await jwt.verify(token,"DEV@Tinder@#");
-console.log(decodedMessage);
+//console.log(decodedMessage);
 const{_id}=decodedMessage;
-console.log("Logged in user is:"+_id);
+//console.log("Logged in user is:"+_id);
+const user=await User.findById(_id);
+if(!user){
+  throw new Error("User does not exist");
+}
   //console.log(cookies);
-  res.send("reading cookies")
+  res.send(user);
+  }
+  catch(err){
+res.status(400).send("Error"+err.message)
+  }
 })
+
 
 // Get all users
 app.get("/feed", async (req, res) => {
