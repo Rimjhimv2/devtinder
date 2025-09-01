@@ -105,9 +105,10 @@ requestRouter.post(
       const data = await connectionRequest.save();
 
       return res.json({
-        message: "Connection Request sent successfully",
+        message: req.user.firstName + " is " + status + " in " + toUser.firstName,
         data,
       });
+      
     } catch (err) {
       return res.status(400).json({
         error: err.message,
