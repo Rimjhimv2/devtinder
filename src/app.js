@@ -7,13 +7,18 @@ const bcrypt=require("bcrypt");
 const app = express();
 const cookieParser=require("cookie-parser");
 const jwt = require("jsonwebtoken");
-const cors=require("cors")
+const cors=require("cors");
+// import request routes
+const requestRouter = require("./routes/request.js");
+
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
   origin:"http://localhost:5173",//when u login u should get in token inside cookies
   credentials:true,
 }));
+app.use("/request", requestRouter);
 //app.use(jwt()); jsonwebtoken is not an express middleware it is just a utility library
 
 // Signup Route
