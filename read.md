@@ -69,7 +69,38 @@ The text from the image is as follows:
 -ADD API LEVEL VALIDATION ON PATCH REQUEST AND SIGNUP POST API 
 -data sanitizing add api validation for each field
 -install validator
--explorer validator library function and use validator func for pass,email                              
+-explorer validator library function and use validator func for pass,email     
+- read the cookies inside your profile API and find the logged in user
+- userAuth Middleware
+- Add the userAuth middle ware in profile API and a new sendConnectionRequest API
+- Set the expiry of JWT token and cookies to 7 days
+- Create userSchema method to getJWT()
+- Create UserSchema method to comparepassword(passwordInputByUser)
+
+- Explore tinder APIs
+- Create a list all API you can think of in Dev Tinder
+- Group multiple routes under repctive routers
+- Read documentation for express.Router
+- Create routes folder for managing auth,profile, request routers
+- create authRouter, profileRouter, requestRouter
+- Import these routers in app.js
+- Create POST /logout API
+- Create PATCH /profile/edit
+- Create PATCH /profile/password API → forgot password API
+- Make you validate all data in every POST, PATCH apis
+
+
+#create a connectionrequestSchema
+send connection request api
+proper validation of data
+think about All corner casses
+understad or query 
+
+- Read this artcicle about compond indexes
+read more about indexes in mongodb
+why do we need index in db/
+what is the advantages and disadvantages odf creating?
+
 
 
 ```

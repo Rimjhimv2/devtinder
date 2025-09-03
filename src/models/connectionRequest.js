@@ -23,6 +23,10 @@ const connectionRequestSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+//connectionRequest.find({fromUserId:6789999999})
+//now all these query are v v fast
+//by writing this these query are v v fast even if million of data is present
+connectionRequestSchema.index({fromUserId:1,toUserId:1})
 connectionRequestSchema.pre("save",function(next){
   const connectionRequestSchema=this;
   if(connectionRequestSchema.fromUserId.equals(connectionRequestSchema.toUserId)){
