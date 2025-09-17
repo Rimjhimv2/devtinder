@@ -1,6 +1,3 @@
-
-
-
 const jwt = require("jsonwebtoken");
 const User = require("../models/user"); // apne User model ka path lagao
 
@@ -12,7 +9,9 @@ const userAuth = async (req, res, next) => {
       return res.status(401).json({ message: "Unauthorized: No token provided" });
     }
 
-    const decodedObj = await jwt.verify(token, "DEV@Tinder@#");
+    
+    const decodedObj = await jwt.verify(token, process.env.JWT_SECRET);
+
 
   
     const user = await User.findById(decodedObj._id);

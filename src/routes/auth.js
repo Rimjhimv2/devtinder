@@ -1,24 +1,3 @@
-// src/routes/auth.js
-{/*const express = require("express");
-const router = express.Router();
-
-router.post("/logout", (req, res) => {
-  try {
-    res.clearCookie("token", {
-      httpOnly: true,
-      sameSite: "None",
-      secure: false, // localhost ke liye false
-    });
-    return res.status(200).json({ message: "Logout successful" });
-  } catch (err) {
-    console.error("Logout error:", err.message);
-    return res.status(500).json({ message: "Something went wrong" });
-  }
-});
-
-module.exports = router;*/}
-
-
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -60,7 +39,7 @@ router.post("/login", async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid password" });
     }
-    const token = jwt.sign({ _id: user._id }, "DEV@Tinder@#", {
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
     res.cookie("token", token, {

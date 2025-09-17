@@ -22,14 +22,9 @@ app.use(cors({
 }));
 app.use("/", authRouter);
 app.use("/request", requestRouter);
-//app.use(jwt()); jsonwebtoken is not an express middleware it is just a utility library
 
 
 app.post("/signup", async (req, res) => {
-  //validate the data 
-  
-
-  
   try {
     validateSignUpData(req);
     const {firstName,lastName,email,password,age}=req.body;
@@ -56,7 +51,7 @@ app.post("/login",async(req,res)=>{
     const ispasswordValid=await bcrypt.compare(password,user.password)
   if(ispasswordValid){
     //create a jwt token
-    const token=await jwt.sign({_id:user._id},"DEV@Tinder@#");
+    const token=await jwt.sign({_id:user._id},process.env.JWT_SECRET);
     console.log(token);
 
 
@@ -88,7 +83,7 @@ if(!token){
   throw new Error("invalid token");
 }
 //validate my token
-    const decodedMessage=await jwt.verify(token,"DEV@Tinder@#");
+    const decodedMessage=await jwt.verify(token,process.env.JWT_SECRET);
 const{_id}=decodedMessage;
 
 const user=await User.findById(_id);

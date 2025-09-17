@@ -1,26 +1,6 @@
-
-      
-//}
-//connectDB return a promise 
-
-//module.exports=connectDB
-//each and every data goes into the adtabase have to validates
-
-
-//call this function 
-
-//anything you want to configure your app just write inside this//
-//npm library called mongoose..
-//connectDB() → mongoose.connect() call karta hai → ye Promise return karta hai.
-
-//Agar MongoDB se connection ban gaya → .then() chalega aur "Database connection established..." print karega.
-
-//Agar connection me problem aayi (IP whitelist, wrong password, internet issue) → .catch() chalega aur error print karega.np
-
-
 const mongoose = require("mongoose");
 
-// Function to connect MongoDB
+
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI, {
@@ -28,7 +8,7 @@ const connectDB = async () => {
       useUnifiedTopology: true,
     });
 
-    console.log("✅ MongoDB Connected...");
+    console.log("MongoDB Connected...");
   } catch (error) {
     console.error(" Database connection failed:", error.message);
     process.exit(1); 
