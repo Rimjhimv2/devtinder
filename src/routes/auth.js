@@ -25,23 +25,16 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
 const router = express.Router();
-
-
-// 🔹 SIGNUP ROUTE
 router.post("/signup", async (req, res) => {
   try {
     const { firstName, email, password, photoUrl } = req.body;
 
-    // check if user already exists
+    
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
-
-    // hash password
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    // create new user
     const newUser = new User({
       firstName,
       email,
@@ -56,35 +49,24 @@ router.post("/signup", async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 });
-
-
-// 🔹 LOGIN ROUTE
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-
-    // check user exists
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: "User not found" });
     }
-
-    // check password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid password" });
     }
-
-    // generate token
     const token = jwt.sign({ _id: user._id }, "DEV@Tinder@#", {
       expiresIn: "7d",
     });
-
-    // set cookie
     res.cookie("token", token, {
       httpOnly: true,
       sameSite: "None",
-      secure: false, // localhost pe false, production me true
+      secure: false, 
     });
 
     return res.status(200).json({
@@ -99,15 +81,12 @@ router.post("/login", async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 });
-
-
-// 🔹 LOGOUT ROUTE
 router.post("/logout", (req, res) => {
   try {
     res.clearCookie("token", {
       httpOnly: true,
       sameSite: "None",
-      secure: false, // localhost ke liye false
+      secure: false, 
     });
     return res.status(200).json({ message: "Logout successful" });
   } catch (err) {

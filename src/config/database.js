@@ -1,11 +1,4 @@
-//const mongoose= require("mongoose");
-//to connect to the cluster basically 
-//good way to connect to wrap it inside async and call await 
-//const connectDB=async()=>{
-    //await mongoose.connect(
-       // "mongodb+srv://rimjhimv543:2a3Pbu2VskxyCEJw@namestenode.xeiymrv.mongodb.net/devTinder"
-       //process.env.MONGO_URI
-      //)//;
+
       
 //}
 //connectDB return a promise 
@@ -37,8 +30,8 @@ const connectDB = async () => {
 
     console.log("✅ MongoDB Connected...");
   } catch (error) {
-    console.error("❌ Database connection failed:", error.message);
-    process.exit(1); // Exit process if DB connection fails
+    console.error(" Database connection failed:", error.message);
+    process.exit(1); 
   }
 };
 

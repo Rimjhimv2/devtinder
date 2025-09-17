@@ -5,7 +5,7 @@ const connectionRequestSchema = new mongoose.Schema(
     fromUserId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "User",   // optional, acha practice hai
+      ref: "User",   
     },
     toUserId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -23,9 +23,6 @@ const connectionRequestSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-//connectionRequest.find({fromUserId:6789999999})
-//now all these query are v v fast
-//by writing this these query are v v fast even if million of data is present
 connectionRequestSchema.index({fromUserId:1,toUserId:1})
 connectionRequestSchema.pre("save",function(next){
   const connectionRequestSchema=this;
@@ -35,11 +32,6 @@ connectionRequestSchema.pre("save",function(next){
   }
   next();
 })
-//check if the fromUser is same as touserId
-
-
-
-// ✅ correct:
 const ConnectionRequestModel = mongoose.model(
   "ConnectionRequest",
   connectionRequestSchema

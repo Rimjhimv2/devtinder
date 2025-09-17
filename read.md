@@ -103,6 +103,46 @@ what is the advantages and disadvantages odf creating?
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//note imp ques 
+  //Express flow:
+
+//Jab bhi ek request aati hai, Express har app.use() / app.METHOD() ko order of registration ke according execute karta hai.
+
+//Agar tumne pehle routes mount kar diye, to request directly un routes pe chale jaati hai →
+//  aur unse pehle likhe huye middlewares (jaise cors, cookieParser) apply hi nahi hote.
+
+
+
+/note imp ques 
+  //Express flow:
+
+//Jab bhi ek request aati hai, Express har app.use() / app.METHOD() ko order of registration ke according execute karta hai.
+
+//Agar tumne pehle routes mount kar diye, to request directly un routes pe chale jaati hai →
+//  aur unse pehle likhe huye middlewares (jaise cors, cookieParser) apply hi nahi hote.8*/}
+
+
+
 ```
 //this will only handle get call to /user
 //app.get("/user/:userId",(req,res)=>{
