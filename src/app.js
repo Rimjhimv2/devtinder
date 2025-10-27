@@ -12,14 +12,15 @@ const requestRouter = require("./routes/request.js");
 const authRouter = require("./routes/auth");
 
 
-
-//middleware pehle
-app.use(express.json());
-app.use(cookieParser());
 app.use(cors({
   origin:"http://localhost:5173",//when u login u should get in token inside cookies
   credentials:true,
 }));
+
+//middleware pehle
+app.use(express.json());
+app.use(cookieParser());
+
 app.use("/", authRouter);
 app.use("/request", requestRouter);
 
